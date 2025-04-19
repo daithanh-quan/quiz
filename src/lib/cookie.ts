@@ -1,6 +1,6 @@
 import { deleteCookie, getCookie, setCookie } from "cookies-next/client";
 
-const keys = {
+export const keys = {
   token: "token",
   refreshToken: "refreshToken",
 };
