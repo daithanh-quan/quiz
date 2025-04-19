@@ -49,7 +49,7 @@ function InputField<T extends FieldValues>(
         control={control}
         render={({ field, fieldState }) => (
           <div className="flex flex-wrap">
-            <div className={cn("relative")}>
+            <div className={cn("relative w-full")}>
               {leftChild}
               <Input
                 ref={ref}

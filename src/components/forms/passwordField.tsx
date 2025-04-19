@@ -48,15 +48,15 @@ function InputPwField<T extends FieldValues>(
         control={control}
         render={({ field, fieldState: { error } }) => (
           <div className="flex flex-wrap">
-            <div className={cn("relative")}>
+            <div className={cn("relative w-full")}>
               <Input
                 ref={ref}
                 value={field.value || ""}
                 style={{ width: "100%" }}
+                type={showPassword ? "text" : "password"}
                 onChange={(e) => {
                   const value = e.target.value;
                   field.onChange(value);
-                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                   callbackOnchange && callbackOnchange?.(value);
                 }}
                 className={cn(
@@ -71,10 +71,10 @@ function InputPwField<T extends FieldValues>(
                 variant="ghost"
                 size="sm"
                 className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                onClick={() => setShowPassword((prev) => !prev)}
+                onClick={() => setShowPassword(!showPassword)}
                 disabled={!field?.value}
               >
-                {showPassword && !field?.value ? (
+                {showPassword ? (
                   <EyeIcon className="h-4 w-4" aria-hidden="true" />
                 ) : (
                   <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
