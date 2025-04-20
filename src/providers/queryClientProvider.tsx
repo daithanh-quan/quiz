@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { SessionProvider } from "next-auth/react";
+
 import {
   isServer,
   QueryClient,
@@ -37,7 +39,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient as any}>
-      <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
+      <ReactQueryStreamedHydration>
+        <SessionProvider>{children}</SessionProvider>
+      </ReactQueryStreamedHydration>
     </QueryClientProvider>
   );
 }
