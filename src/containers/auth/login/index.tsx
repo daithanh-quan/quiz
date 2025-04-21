@@ -3,6 +3,7 @@
 import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -62,7 +63,10 @@ const LoginContainer = () => {
     const payload = { email, password };
     mutate(payload);
   };
-  const handleGoogleLogin = async () => {};
+
+  const handleGoogleLogin = async () => {
+    await signIn("google", { redirect: false });
+  };
 
   return (
     <CardContent className="space-y-4">

@@ -22,6 +22,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "AI interview",
   description: "AI interview app",
+  icons: {
+    icon: "/logo.ico",
+  },
 };
 
 export default function RootLayout({
