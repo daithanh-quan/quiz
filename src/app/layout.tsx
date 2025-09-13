@@ -20,14 +20,14 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "AI interview",
-  description: "AI interview app",
+  title: "Quiz",
+  description: "Quiz app",
   icons: {
     icon: "/logo.ico",
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -1,5 +1,5 @@
 {
-  "name": "aiagent",
+  "name": "quiz",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,15 +9,7 @@
     "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "yarn lint:fix && yarn lint:format",
-    "prepare": "husky",
-    "schema:check": "npx zenstack check --schema=src/databases/schema.zmodel",
-    "schema:format": "npx zenstack format --schema=src/databases/schema.zmodel",
-    "schema:generate": "npx zenstack generate --schema=src/databases/schema.zmodel && npx prisma generate --schema=src/databases/prisma/schema.prisma",
-    "schema:reset": "npm run schema:generate && npx prisma migrate reset --schema=src/databases/prisma/schema.prisma",
-    "migration:generate": "npm run schema:check && npm run schema:format && npm run schema:generate && npx prisma migrate dev --schema=src/databases/prisma/schema.prisma --create-only --name",
-    "migration:dev": "npx prisma migrate dev --schema=src/databases/prisma/schema.prisma",
-    "migration:prod": "npx prisma migrate deploy --schema=src/databases/prisma/schema.prisma",
-    "migration:status": "npx prisma migrate status --schema=src/databases/prisma/schema.prisma"
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -39,7 +31,6 @@
     "@tanstack/react-table": "^8.20.5",
     "@zenstackhq/runtime": "2.14.0",
     "axios": "^1.7.9",
-    "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cookies-next": "^5.0.2",
@@ -79,9 +70,7 @@
     "postcss": "^8",
     "prettier": "3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
-    "prisma": "6.6.x",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "zenstack": "2.14.0"
+    "typescript": "^5"
   }
 }

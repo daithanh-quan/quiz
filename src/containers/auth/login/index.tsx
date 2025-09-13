@@ -3,20 +3,21 @@
 import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import { signIn } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z, ZodType } from "zod";
 
+import { ErrorResponse } from "src/api/baseAxios/interfaces";
 import { InputField } from "src/components/forms";
 import InputPwField from "src/components/forms/passwordField";
-import { GoogleIcon } from "src/components/svgs";
 import { Button } from "src/components/ui/button";
 import { CardContent } from "src/components/ui/card";
+import cookie from "src/lib/cookie";
 import { useSignIn } from "src/queries/auth/login";
+import { useGetMe } from "src/queries/auth/me";
+import { routerRole } from "src/utils";
 
 type LoginFormValues = {
   email: string;
@@ -39,6 +40,9 @@ const schema: ZodType<Partial<LoginFormValues>> = z.object({
 
 const LoginContainer = () => {
   const router = useRouter();
+  const { refetch } = useGetMe({
+    enabled: false,
+  });
 
   const form = useForm<LoginFormValues>({
     defaultValues: {
@@ -46,15 +50,27 @@ const LoginContainer = () => {
       password: "",
     },
     resolver: zodResolver(schema),
-    mode: "all",
+    mode: "onSubmit",
   });
 
   const { mutate, isPending } = useSignIn({
-    onSuccess: (data) => {
-      router.push("/");
+    onSuccess: async (data) => {
+      cookie.setToken(data?.access_token);
+      await refetch()
+        .then((res) => {
+          const data = res.data as Response.Me;
+
+          router.push(routerRole[data.role]);
+          cookie.setRole(data.role);
+
+          return;
+        })
+        .catch((e) => {
+          router.push("/");
+        });
     },
-    onError: (error) => {
-      toast.error("Login failed");
+    onError: (error: ErrorResponse) => {
+      toast.error(error?.message || "Login failed");
     },
   });
 
@@ -64,58 +80,39 @@ const LoginContainer = () => {
     mutate(payload);
   };
 
-  const handleGoogleLogin = async () => {
-    await signIn("google", { redirect: false });
-  };
-
   return (
-    <CardContent className="space-y-4">
+    <CardContent>
       <FormProvider {...form}>
-        <div className="space-y-2">
-          <InputField
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="name@example.com"
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <label htmlFor="password">Password</label>
-            <Link
-              href="/forgot-password"
-              className="text-sm text-blue-600 hover:text-blue-500"
-            >
-              Forgot password?
-            </Link>
+        <form onSubmit={form.handleSubmit(handleCredentialLogin)}>
+          <div className="space-y-2">
+            <InputField
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="name@example.com"
+              required
+            />
           </div>
-          <InputPwField name="password" />
-        </div>
-        <Button
-          onClick={form.handleSubmit(handleCredentialLogin)}
-          type="submit"
-          className="w-full"
-          disabled={isPending}
-        >
-          {isPending ? "Logging in..." : "Login with Email"}
-        </Button>
+          <div className="my-5">
+            <div className="flex items-center justify-between">
+              <label htmlFor="password">Password</label>
+            </div>
+            <InputPwField
+              name="password"
+              placeholder="Please enter your password"
+            />
+          </div>
+          <Button
+            loading={isPending}
+            onClick={form.handleSubmit(handleCredentialLogin)}
+            type="submit"
+            className="mt-5 w-full"
+            disabled={isPending}
+          >
+            Login
+          </Button>
+        </form>
       </FormProvider>
-
-      <div className="flex items-center justify-center">
-        <span className="px-3 text-sm text-gray-500">OR</span>
-      </div>
-
-      <Button
-        type="button"
-        variant="outline"
-        className="flex w-full items-center justify-center gap-2"
-        onClick={handleGoogleLogin}
-        disabled={isPending}
-      >
-        <GoogleIcon />
-        Continue with Google
-      </Button>
     </CardContent>
   );
 };

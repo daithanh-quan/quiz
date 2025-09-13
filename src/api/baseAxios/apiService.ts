@@ -1,5 +1,3 @@
-import { AxiosError } from "axios";
-
 import baseAxios from "./index";
 import { ErrorResponse } from "./interfaces";
 
@@ -28,6 +26,7 @@ class ApiService {
     try {
       return await baseAxios.post(endpoint, data);
     } catch (error) {
+      console.log(error);
       return this.handleError<R>(error);
     }
   }
@@ -66,12 +65,10 @@ class ApiService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private handleError<T>(error: any): never {
-    if (error instanceof AxiosError) {
+    if (error?.error) {
       const errorResponse: ErrorResponse = {
-        message: error.response?.data?.message || error.message,
-        code: error.response?.data?.code,
-        errors: error.response?.data?.errors,
-        statusCode: error.response?.status,
+        message: error?.error.message,
+        statusCode: error?.error?.status,
       };
 
       // throw error to React Query

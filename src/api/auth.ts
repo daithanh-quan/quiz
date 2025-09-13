@@ -1,9 +1,8 @@
 import ApiService from "./baseAxios/apiService";
 
 export const keys = {
-  signIn: () => ["/v1/auth/sign-in"] as const,
-  me: () => ["/v1/me"] as const,
-  posts: () => ["posts"] as const,
+  signIn: () => ["/auth/login"] as const,
+  me: () => ["/auth/me"] as const,
 };
 
 class Auth extends ApiService {

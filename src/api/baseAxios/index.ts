@@ -22,8 +22,9 @@ const processQueue = (error: any, token: string | null = null) => {
 
   failedQueue = [];
 };
+
 export const baseAxios = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: `${process.env.NEXT_PUBLIC_APP_URL}/Prod/api/v1`,
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",

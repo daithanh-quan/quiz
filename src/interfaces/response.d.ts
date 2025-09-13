@@ -1,21 +1,13 @@
 declare namespace Response {
-  export type Post = {
-    id: number;
-    title: string;
-    body: string;
-  };
-
   export type Me = {
     id: number;
     name: string;
     email: string;
+    role: string;
   };
 
   export type SignIn = {
-    accessToken: string;
-    refreshToken: string;
-    user: Me;
+    access_token: string;
+    refreshToken?: string;
   };
-
-  export type PostList = Post[];
 }
