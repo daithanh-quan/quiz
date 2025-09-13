@@ -3,6 +3,7 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next/client";
 export const keys = {
   token: "token",
   refreshToken: "refreshToken",
+  role: "role",
 };
 
 class Cookie {
@@ -10,8 +11,16 @@ class Cookie {
     setCookie(keys.token, token);
   }
 
+  setRole(role: string) {
+    setCookie(keys.role, role);
+  }
+
   getToken() {
     return getCookie(keys.token);
+  }
+
+  getRole() {
+    return getCookie(keys.role);
   }
 
   getRefreshToken() {
@@ -24,6 +33,15 @@ class Cookie {
 
   deleteToken() {
     deleteCookie(keys.token);
+  }
+
+  deleteRole() {
+    deleteCookie(keys.role);
+  }
+
+  logout() {
+    this.deleteToken();
+    this.deleteRole();
   }
 
   deleteRefreshToken() {
