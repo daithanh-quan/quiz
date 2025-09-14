@@ -1,6 +1,8 @@
 import React from "react";
 
-import { Bell, Menu, Search, User } from "lucide-react";
+import { Bell, Menu, Search } from "lucide-react";
+
+import UserMenu from "src/components/layout/common/userMenu";
 
 const Header = () => {
   return (
@@ -8,9 +10,12 @@ const Header = () => {
       <div className="flex h-16 items-center justify-between px-4">
         {/* Left side */}
         <div className="flex items-center">
-          <button className="rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 lg:hidden">
+          <label
+            htmlFor="sidebar-toggle"
+            className="cursor-pointer rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 lg:hidden"
+          >
             <Menu className="h-5 w-5" />
-          </button>
+          </label>
 
           {/* Search Bar */}
           <div className="ml-4 hidden items-center md:flex">
@@ -32,16 +37,7 @@ const Header = () => {
             <Bell className="h-5 w-5" />
           </button>
 
-          {/* User menu */}
-          <div className="flex items-center space-x-3">
-            <div className="hidden text-right sm:block">
-              <p className="text-sm font-medium text-gray-900">John Doe</p>
-              <p className="text-xs text-gray-500">Admin</p>
-            </div>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500">
-              <User className="h-5 w-5 text-white" />
-            </div>
-          </div>
+          <UserMenu />
         </div>
       </div>
     </header>

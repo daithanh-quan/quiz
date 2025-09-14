@@ -1,7 +1,7 @@
 declare namespace Response {
   export type Me = {
     id: number;
-    name: string;
+    username: string;
     email: string;
     role: string;
   };
@@ -10,4 +10,6 @@ declare namespace Response {
     access_token: string;
     refreshToken?: string;
   };
+
+  export type UpdateProfile = Partial<Me>;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { navigationItems } from "src/components/layout/admin/navigateItems";
 import Header from "src/components/layout/common/header";
 
 import Sidebar from "../common/sidebar";
@@ -11,16 +12,14 @@ type Props = {
 const AdminLayout: React.FC<Props> = ({ children }) => {
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Sidebar Backdrop */}
-      {/*{sidebarOpen && (*/}
-      {/*  <div*/}
-      {/*    className="fixed inset-0 z-20 bg-gray-900 bg-opacity-50 lg:hidden"*/}
-      {/*    onClick={() => setSidebarOpen(false)}*/}
-      {/*  />*/}
-      {/*)}*/}
+      <input type="checkbox" id="sidebar-toggle" className="peer hidden" />
+      <label
+        htmlFor="sidebar-toggle"
+        className="fixed inset-0 z-20 hidden cursor-pointer bg-gray-900 bg-opacity-50 peer-checked:block lg:hidden"
+      />
 
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar navigationItems={navigationItems} />
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col lg:ml-0">

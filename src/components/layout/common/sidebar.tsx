@@ -6,37 +6,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import {
-  BarChart3,
-  Calendar,
-  FileText,
-  Home,
-  LogOut,
-  Settings,
-  Users,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import logo from "src/assets/images/quiz_logo.png";
 import useAuth from "src/hooks/useAuth";
 
-const navigationItems = [
-  { name: "Dashboard", href: "/admin", icon: Home },
-  { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
-  { name: "Documents", href: "/admin/documents", icon: FileText },
-  { name: "Team", href: "/admin/team", icon: Users },
-  { name: "Calendar", href: "/admin/calendar", icon: Calendar },
-  { name: "Settings", href: "/admin/settings", icon: Settings },
-];
+import { NavigateItem } from "./interface";
 
-const Sidebar = () => {
+type Props = {
+  navigationItems: NavigateItem[];
+};
+
+const Sidebar: React.FC<Props> = ({ navigationItems }) => {
   const pathname = usePathname();
 
   const { logout } = useAuth();
-  const sidebarOpen = true;
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-30 w-64 transform bg-white shadow-lg transition-transform duration-200 ease-in-out lg:static lg:inset-0 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} `}
+      className={
+        "fixed inset-y-0 left-0 z-30 w-64 -translate-x-full transform bg-white shadow-lg transition-transform duration-200 ease-in-out peer-checked:translate-x-0 lg:static lg:inset-0 lg:translate-x-0"
+      }
     >
       <div className="flex h-full flex-col">
         {/* Logo */}
@@ -46,14 +36,14 @@ const Sidebar = () => {
 
         {/* Navigation */}
         <nav className="flex-1 space-y-2 px-4 py-4">
-          {navigationItems.map((item) => {
-            const Icon = item.icon;
+          {navigationItems?.map((item) => {
+            const Icon = item?.icon;
             return (
               <Link
                 key={item.name}
                 href={item.href}
                 className={`flex items-center rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
-                  pathname === item.name
+                  pathname === item.href
                     ? "bg-blue-100 text-blue-700"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 } `}

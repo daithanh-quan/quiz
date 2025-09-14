@@ -31,11 +31,7 @@ class ApiService {
     }
   }
 
-  async put<T, R = T>(
-    endpoint: string,
-    id: string | number,
-    data: T,
-  ): Promise<R> {
+  async put<T, R = T>(endpoint: string, id: number, data: T): Promise<R> {
     try {
       return await baseAxios.put(`${endpoint}/${id}`, data);
     } catch (error) {
