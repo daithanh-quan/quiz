@@ -2,6 +2,7 @@ import ApiService from "./baseAxios/apiService";
 
 export const keys = {
   signIn: () => ["/auth/login"] as const,
+  updateProfile: () => ["/auth/profile"] as const,
   me: () => ["/auth/me"] as const,
 };
 

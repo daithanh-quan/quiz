@@ -3,4 +3,10 @@ declare namespace Payload {
     email: string;
     password: string;
   };
+
+  export type UpdateProfile = {
+    username?: string;
+    password?: string;
+    status?: string;
+  };
 }

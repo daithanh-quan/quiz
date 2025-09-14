@@ -78,7 +78,7 @@ const Modal: React.FC<Props> = ({
             {title}
           </DialogTitle>
         </DialogHeader>
-        <DialogDescription>
+        <DialogDescription asChild>
           {typeof props?.content === "function"
             ? props?.content({
                 open: isOpenOutside ? (props.open as boolean) : open,
