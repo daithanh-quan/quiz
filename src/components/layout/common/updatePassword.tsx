@@ -75,7 +75,13 @@ const UpdatePassword: React.FC<Props> = ({ onSuccess, onCancel }) => {
           placeholder="Please confirm new password"
         />
         <div className="flex justify-between gap-2 pt-5">
-          <Button onClick={onCancel} variant="outline" className="flex-1">
+          <Button
+            type="button"
+            disabled={isPending}
+            onClick={onCancel}
+            variant="outline"
+            className="flex-1"
+          >
             Cancel
           </Button>
           <Button

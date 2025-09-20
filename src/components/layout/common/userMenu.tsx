@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { useIsMutating } from "@tanstack/react-query";
 import { User } from "lucide-react";
 
 import UpdatePassword from "src/components/layout/common/updatePassword";
@@ -21,11 +22,14 @@ import UpdateUsername from "./updateUsername";
 const UserMenu = () => {
   const [valueDropdown, setValueDropdown] = React.useState("");
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const isMutating = useIsMutating();
 
   const { data } = useGetMe<Response.Me>();
 
   const handleOpenModal = (type: "username" | "password") => {
     setValueDropdown(type);
+    setIsModalOpen(true);
     setIsMenuOpen(false);
   };
 
@@ -65,16 +69,18 @@ const UserMenu = () => {
         </DropdownMenuContent>
       </DropdownMenu>
       <Modal
+        closeOutSide={!!isMutating}
+        isCloseIcon={!!isMutating}
         title="Update Profile"
-        open={Boolean(valueDropdown)}
-        setOpen={() => setValueDropdown("")}
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
         content={() => (
           <div>
             {valueDropdown === "username" && (
-              <UpdateUsername onCancel={() => setValueDropdown("")} />
+              <UpdateUsername onCancel={() => setIsModalOpen(false)} />
             )}
             {valueDropdown === "password" && (
-              <UpdatePassword onCancel={() => setValueDropdown("")} />
+              <UpdatePassword onCancel={() => setIsModalOpen(false)} />
             )}
           </div>
         )}
