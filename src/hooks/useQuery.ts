@@ -7,16 +7,11 @@ import { z } from "zod";
 /**
  * Type definition for query parameter parsing options
  */
-type QueryParseOptions<T extends Record<string, unknown>> = {
+type QueryParseOptions<T extends Record<string, any>> = {
   /**
    * Zod schema for validating and transforming the query parameters
    */
   schema?: z.ZodType<T>;
-
-  /**
-   * Default values if query parameters are not found or invalid
-   */
-  defaultValue?: Partial<T>;
 };
 
 /**
@@ -25,34 +20,41 @@ type QueryParseOptions<T extends Record<string, unknown>> = {
  * @param options Optional parsing and validation options
  * @returns The parsed query parameters object
  */
-export function useQuery<T extends Record<string, unknown>>(
+export function useQuery<T extends Record<string, any>>(
   options: QueryParseOptions<T> = {},
-): Partial<T> | T | object {
+): Partial<T> {
   const searchParams = useSearchParams();
 
-  return useMemo(() => {
+  return useMemo((): T => {
     // If no schema is provided, convert all parameters to their raw string values
     if (!options.schema) {
-      const params: Record<string, string> = {};
+      const params: Record<string, any> = {};
       for (const [key] of searchParams.entries()) {
-        params[key] = searchParams.get(key)!;
+        params[key] = searchParams.get(key) || undefined;
       }
-      return params as Partial<T>;
+
+      // Merge with default values and return
+      return {
+        ...params,
+      } as T;
     }
 
     try {
       // Create an object with all current search params
-      const paramsObject: Record<string, string> = {};
+      const paramsObject: Record<string, any> = {};
       for (const [key] of searchParams.entries()) {
-        paramsObject[key] = searchParams.get(key)!;
+        const value = searchParams.get(key);
+        if (value !== null) {
+          paramsObject[key] = value;
+        }
       }
 
       // Parse the entire params object using the provided Zod schema
       const parsedValue = options.schema.parse(paramsObject);
       return parsedValue;
     } catch {
-      // If parsing fails, return the default value
-      return options.defaultValue ?? {};
+      // If parsing fails, return the default value or empty object
+      return {} as T;
     }
-  }, [searchParams, options.defaultValue, options.schema]);
+  }, [searchParams, options.schema]);
 }

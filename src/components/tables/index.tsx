@@ -14,7 +14,6 @@ const CusTomTable = <TData, TValue>(
     columns,
     data,
     paginator,
-    //className
     wrapperClassName,
     tableHeaderClassName,
     tableRowClassName,
@@ -22,7 +21,6 @@ const CusTomTable = <TData, TValue>(
     tableClassName,
     tableCellClassName,
     tableBodyClassName,
-    //----
     ...rest
   }: DataTableProps<TData, TValue> & TableProps,
   ref: React.Ref<HTMLTableElement>,
@@ -56,6 +54,7 @@ const CusTomTable = <TData, TValue>(
             tableHeaderClassName={tableHeaderClassName}
           />
           <Tbody
+            {...rest}
             table={table}
             columns={columns}
             tableRowClassName={tableRowClassName}
@@ -64,32 +63,36 @@ const CusTomTable = <TData, TValue>(
           />
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length
-            ? `${table.getFilteredSelectedRowModel().rows.length} of `
-            : null}
-          {table.getFilteredRowModel().rows.length} row(s)
+      {!rest.isLoading && (
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <div className="flex-1 text-sm text-muted-foreground">
+            {table.getFilteredSelectedRowModel().rows.length
+              ? `${table.getFilteredSelectedRowModel().rows.length} of `
+              : null}
+            {table.getFilteredRowModel().rows.length} row(s)
+          </div>
+          <div className="flex justify-end">
+            <Paginator
+              currentPage={
+                paginator
+                  ? paginator.currentPage
+                  : table.getState().pagination.pageIndex + 1
+              }
+              totalPages={
+                paginator ? paginator.totalPages : table.getPageCount()
+              }
+              onPageChange={(pageNumber) =>
+                paginator
+                  ? paginator.onPageChange(pageNumber)
+                  : table.setPageIndex(pageNumber - 1)
+              }
+              showPreviousNext={
+                paginator ? (paginator.showPreviousNext as boolean) : true
+              }
+            />
+          </div>
         </div>
-        <div className="flex justify-end">
-          <Paginator
-            currentPage={
-              paginator
-                ? paginator.currentPage
-                : table.getState().pagination.pageIndex + 1
-            }
-            totalPages={paginator ? paginator.totalPages : table.getPageCount()}
-            onPageChange={(pageNumber) =>
-              paginator
-                ? paginator.onPageChange(pageNumber)
-                : table.setPageIndex(pageNumber - 1)
-            }
-            showPreviousNext={
-              paginator ? (paginator.showPreviousNext as boolean) : true
-            }
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

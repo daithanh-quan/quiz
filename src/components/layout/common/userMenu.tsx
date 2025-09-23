@@ -44,7 +44,7 @@ const UserMenu = () => {
               </p>
               <p className="text-xs capitalize text-gray-500">{data?.role}</p>
             </div>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-300">
               <User className="h-5 w-5 text-white" />
             </div>
           </div>
