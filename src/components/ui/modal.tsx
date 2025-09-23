@@ -40,10 +40,14 @@ const Modal: React.FC<Props> = ({
   isCloseIcon,
   ...props
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(props?.open || false);
   const isOpenOutside = typeof props?.open === "boolean";
 
   const handleOpenChange = (open: boolean) => {
+    if (!open && closeOutSide === false) {
+      return;
+    }
+
     if (typeof props?.setOpen === "function") {
       props?.setOpen(open);
     } else {
@@ -51,23 +55,31 @@ const Modal: React.FC<Props> = ({
     }
   };
 
+  const handleTriggerClick = () => {
+    if (typeof props?.setOpen === "function") {
+      props?.setOpen(true);
+    } else {
+      setOpen(true);
+    }
+  };
+
   return (
-    <Dialog
-      onOpenChange={handleOpenChange}
-      open={isOpenOutside ? props?.open : open}
-    >
+    <Dialog onOpenChange={handleOpenChange} open={open}>
       {trigger && (
-        <DialogTrigger asChild onClick={() => handleOpenChange(true)}>
+        <DialogTrigger asChild onClick={handleTriggerClick}>
           {trigger}
         </DialogTrigger>
       )}
       <DialogContent
+        dialogOverlayClassname="bg-black/20"
         position={props?.position}
         size={props?.size}
         className={cn("p-5", contentClassName, {
           "[&>.close-icon]:hidden": isCloseIcon,
         })}
-        onInteractOutside={(e) => closeOutSide && e.preventDefault()}
+        onInteractOutside={(e) => {
+          e.preventDefault();
+        }}
       >
         <DialogHeader>
           <DialogTitle
