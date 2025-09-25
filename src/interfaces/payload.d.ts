@@ -10,6 +10,13 @@ declare namespace Payload {
     status?: string;
   };
 
+  export type CreateUser = {
+    username: string;
+    email: string;
+    role: "admin" | "superAdmin" | "client";
+    status: "active" | "pending";
+  };
+
   export type CreateClasses = {
     name: string;
     description?: string;

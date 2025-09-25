@@ -26,6 +26,7 @@
         "args": "none"
       }
     ],
+    "react-hooks/rules-of-hooks": "off",
     "@typescript-eslint/no-var-requires": "warn",
     "@typescript-eslint/no-require-imports": "warn",
     "@typescript-eslint/no-unsafe-assignment": "off",

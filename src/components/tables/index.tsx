@@ -21,6 +21,7 @@ const CusTomTable = <TData, TValue>(
     tableClassName,
     tableCellClassName,
     tableBodyClassName,
+    isLoading,
     ...rest
   }: DataTableProps<TData, TValue> & TableProps,
   ref: React.Ref<HTMLTableElement>,
@@ -54,7 +55,7 @@ const CusTomTable = <TData, TValue>(
             tableHeaderClassName={tableHeaderClassName}
           />
           <Tbody
-            {...rest}
+            isLoading={isLoading}
             table={table}
             columns={columns}
             tableRowClassName={tableRowClassName}
@@ -63,7 +64,7 @@ const CusTomTable = <TData, TValue>(
           />
         </Table>
       </div>
-      {!rest.isLoading && (
+      {!isLoading && (
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="flex-1 text-sm text-muted-foreground">
             {table.getFilteredSelectedRowModel().rows.length
