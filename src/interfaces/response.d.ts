@@ -35,13 +35,20 @@ declare namespace Response {
     updated_at: string;
   };
 
-  export type GetListStudent = {
+  export type Student = {
     id: number;
     username: string;
-    role: string;
     status: string;
-    created_by_admin: boolean;
     email: string;
     created_at: string;
+  };
+
+  export type Exam = {
+    id: number;
+    name: string;
+    description: string | null;
+    creator: number;
+    created_at: string;
+    updated_at: string;
   };
 }

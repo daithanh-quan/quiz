@@ -10,4 +10,8 @@ declare namespace Param {
   export interface GetListStudent extends Common {
     name?: string;
   }
+
+  export interface GetListExam extends Common {
+    name?: string;
+  }
 }
