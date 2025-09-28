@@ -8,8 +8,8 @@ import { Pencil, TrashIcon } from "lucide-react";
 import { Button } from "src/components/ui/button";
 import { Checkbox } from "src/components/ui/checkbox";
 import Modal from "src/components/ui/modal";
-import DeleteConfirm from "src/containers/admin/classList/table/deleteConfirm";
-import InsetClass from "src/containers/admin/classList/table/insetClass";
+import DeleteConfirm from "src/containers/admin/examList/table/deleteConfirm";
+import InsetExam from "src/containers/admin/examList/table/insetExam";
 
 const useColumn = () => {
   const columns: ColumnDef<unknown, unknown>[] = useMemo(() => {
@@ -39,7 +39,7 @@ const useColumn = () => {
       },
       {
         accessorKey: "name",
-        header: "Class Name",
+        header: "Exam Name",
       },
       {
         accessorKey: "description",
@@ -72,7 +72,7 @@ const useColumn = () => {
                 title="Delete Class"
                 content={({ setOpen }) => (
                   <DeleteConfirm
-                    idClass={row?.original?.id!}
+                    idExam={row?.original?.id!}
                     setOpen={setOpen}
                   />
                 )}
@@ -83,9 +83,9 @@ const useColumn = () => {
                 }
               />
               <Modal
-                title="Edit Class"
+                title="Edit Exam"
                 content={({ setOpen }) => (
-                  <InsetClass
+                  <InsetExam
                     id={row?.original?.id}
                     defaultValues={{
                       name: row?.original?.name,

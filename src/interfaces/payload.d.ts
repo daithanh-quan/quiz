@@ -27,4 +27,11 @@ declare namespace Payload {
   export type AddStudentToClasses = {
     user_id: number;
   };
+
+  export type CreateExam = {
+    name: string;
+    description?: string;
+  };
+
+  export type EditExam = CreateExam;
 }

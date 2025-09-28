@@ -7,7 +7,7 @@ export const keys = {
 };
 
 export type UserListResponse = {
-  data: Response.Me[];
+  data: Response.Student[];
   pagination: Response.Pagination;
 };
 
