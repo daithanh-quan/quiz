@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "src/components/ui/dropdown-menu";
 import Modal from "src/components/ui/modal";
+import useAuth from "src/hooks/useAuth";
 import { useGetMe } from "src/queries/auth/me";
 
 import UpdateUsername from "./updateUsername";
@@ -25,6 +26,7 @@ const UserMenu = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const isMutating = useIsMutating();
 
+  const { logout } = useAuth();
   const { data } = useGetMe<Response.Me>();
 
   const handleOpenModal = (type: "username" | "password") => {
@@ -65,6 +67,13 @@ const UserMenu = () => {
             onClick={() => handleOpenModal("password")}
           >
             Password
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem
+            value="logout"
+            className="pl-2"
+            onClick={logout}
+          >
+            Logout
           </DropdownMenuRadioItem>
         </DropdownMenuContent>
       </DropdownMenu>

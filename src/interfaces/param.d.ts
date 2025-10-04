@@ -14,4 +14,8 @@ declare namespace Param {
   export interface GetListExam extends Common {
     name?: string;
   }
+
+  export interface GetListQuestion extends Common {
+    name?: string;
+  }
 }
