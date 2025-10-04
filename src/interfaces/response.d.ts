@@ -51,4 +51,29 @@ declare namespace Response {
     created_at: string;
     updated_at: string;
   };
+
+  export type Answer = {
+    id: number;
+    is_correct: boolean;
+    answer_text: string;
+    question_id: number;
+  };
+
+  export type Question = {
+    id: number;
+    content: string;
+    options: string[];
+    answers: Answer[];
+    exam_id: number;
+    exam: Exam;
+    question_type: "checkbox" | "radio";
+    question_text: string | null;
+    created_at: string;
+    updated_at: string | null;
+    admin: {
+      id: number;
+      username: string;
+      email: string;
+    };
+  };
 }
