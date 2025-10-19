@@ -11,7 +11,7 @@ import CusTomTable from "src/components/tables";
 import { Button } from "src/components/ui/button";
 import Modal from "src/components/ui/modal";
 import { useQuery } from "src/hooks/useQuery";
-import { useGetListClass } from "src/queries/classes/list";
+import { useGetListClass } from "src/queries/class/list";
 
 import InsetClass from "./insetClass";
 import useColumn from "./useColumn";

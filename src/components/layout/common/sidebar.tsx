@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -19,8 +19,22 @@ type Props = {
 
 const Sidebar: React.FC<Props> = ({ navigationItems }) => {
   const pathname = usePathname();
-
   const { logout } = useAuth();
+
+  const isActive = useCallback(
+    (item: NavigateItem) => {
+      if (item.activeRoutes) {
+        const routes = Array.isArray(item.activeRoutes)
+          ? item.activeRoutes
+          : [item.activeRoutes];
+
+        return routes.some((route) => pathname.includes(route));
+      }
+
+      return pathname === item.href;
+    },
+    [pathname],
+  );
 
   return (
     <aside
@@ -38,12 +52,14 @@ const Sidebar: React.FC<Props> = ({ navigationItems }) => {
         <nav className="flex-1 space-y-2 px-4 py-4">
           {navigationItems?.map((item) => {
             const Icon = item?.icon;
+            const active = isActive(item);
+
             return (
               <Link
                 key={item.name}
                 href={item.href}
                 className={`flex items-center rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
-                  pathname === item.href
+                  active
                     ? "bg-blue-100 text-blue-700"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 } `}
@@ -55,7 +71,6 @@ const Sidebar: React.FC<Props> = ({ navigationItems }) => {
           })}
         </nav>
 
-        {/* User Profile */}
         <div className="border-t border-gray-200 p-4">
           <div
             onClick={logout}
