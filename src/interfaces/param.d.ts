@@ -7,8 +7,14 @@ declare namespace Param {
   export interface GetListClass extends Common {
     name?: string;
   }
+
+  export interface GetListClassStudent {
+    class_id: number;
+  }
   export interface GetListStudent extends Common {
     name?: string;
+    exclude_class_id?: number;
+    only_in_class_id?: number;
   }
 
   export interface GetListExam extends Common {

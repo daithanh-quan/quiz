@@ -1,17 +1,15 @@
 import React, { useMemo } from "react";
 
-import Link from "next/link";
-
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import dayjs from "dayjs";
-import { Pencil, TrashIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 
 import { Button } from "src/components/ui/button";
 import { Checkbox } from "src/components/ui/checkbox";
 import Modal from "src/components/ui/modal";
-import DeleteConfirm from "src/containers/admin/classList/table/deleteConfirm";
-import InsetClass from "src/containers/admin/classList/table/insetClass";
+
+import RemoveStudentFromClassConfirm from "./removeStudentFromClassConfirm";
 
 const useColumn = () => {
   const columns: ColumnDef<unknown, unknown>[] = useMemo(() => {
@@ -40,20 +38,8 @@ const useColumn = () => {
         ),
       },
       {
-        accessorKey: "name",
-        header: "Class Name",
-        cell: (props) => {
-          const row = props.row as Row<Response.Classes>;
-
-          return (
-            <Link
-              className="text-blue-500"
-              href={`/admin/classes/${row.original.id}`}
-            >
-              {row.getValue("name")}
-            </Link>
-          );
-        },
+        accessorKey: "username",
+        header: "Student Name",
       },
       {
         accessorKey: "description",
@@ -89,39 +75,21 @@ const useColumn = () => {
         accessorKey: "actions",
         header: "",
         cell: (props) => {
-          const row = props.row as Row<Response.Classes>;
+          const row = props.row as Row<Response.Student>;
 
           return (
             <div className="flex items-center justify-end gap-2">
               <Modal
-                title="Delete Class"
+                title="Remove Student From Class"
                 content={({ setOpen }) => (
-                  <DeleteConfirm
-                    idClass={row?.original?.id!}
+                  <RemoveStudentFromClassConfirm
+                    idStudent={row?.original?.id!}
                     setOpen={setOpen}
                   />
                 )}
                 trigger={
                   <Button variant="delete">
                     <TrashIcon className="h-4 w-4" />
-                  </Button>
-                }
-              />
-              <Modal
-                title="Edit Class"
-                content={({ setOpen }) => (
-                  <InsetClass
-                    id={row?.original?.id}
-                    defaultValues={{
-                      name: row?.original?.name,
-                      description: row?.original?.description,
-                    }}
-                    setOpen={setOpen}
-                  />
-                )}
-                trigger={
-                  <Button variant="default">
-                    <Pencil className="h-4 w-4" />
                   </Button>
                 }
               />

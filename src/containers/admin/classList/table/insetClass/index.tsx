@@ -10,7 +10,7 @@ import { keys } from "src/api/classes";
 import { InputField } from "src/components/forms";
 import { Button } from "src/components/ui/button";
 import { useQuery } from "src/hooks/useQuery";
-import { useCreateClass, useEditClass } from "src/queries/classes/detail";
+import { useCreateClass, useEditClass } from "src/queries/class/detail";
 
 export type FormValues = {
   name: string;

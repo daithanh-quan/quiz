@@ -37,9 +37,15 @@ type Props = {
   setOpen: (open: boolean) => void;
   defaultValues?: Partial<FormValues>;
   id?: number;
+  onSuccess?: () => void;
 };
 
-const InsetStudent: React.FC<Props> = ({ setOpen, defaultValues, id }) => {
+const InsetStudent: React.FC<Props> = ({
+  setOpen,
+  defaultValues,
+  id,
+  onSuccess,
+}) => {
   const client = useQueryClient();
   const { reset } = useHistory();
   const query = useQuery();
@@ -48,14 +54,16 @@ const InsetStudent: React.FC<Props> = ({ setOpen, defaultValues, id }) => {
     id,
     {
       onSuccess: async () => {
-        await client.invalidateQueries({
-          queryKey: keys.getList({
-            page: query?.page || 1,
-            limit: query?.limit || 10,
-          }),
-        });
+        !onSuccess &&
+          (await client.invalidateQueries({
+            queryKey: keys.getList({
+              page: query?.page || 1,
+              limit: query?.limit || 10,
+            }),
+          }));
         setOpen(false);
         reset();
+        onSuccess && onSuccess?.();
         toast.success("Update student successfully");
       },
       onError: () => {
@@ -66,13 +74,15 @@ const InsetStudent: React.FC<Props> = ({ setOpen, defaultValues, id }) => {
 
   const { mutate: createUser, isPending } = useCreateUser({
     onSuccess: async () => {
-      await client.invalidateQueries({
-        queryKey: keys.getList({
-          page: query?.page || 1,
-          limit: query?.limit || 10,
-        }),
-      });
+      !onSuccess &&
+        (await client.invalidateQueries({
+          queryKey: keys.getList({
+            page: query?.page || 1,
+            limit: query?.limit || 10,
+          }),
+        }));
       setOpen(false);
+      onSuccess && onSuccess?.();
       toast.success("Create student successfully");
       reset();
     },

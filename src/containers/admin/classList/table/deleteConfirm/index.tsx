@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { keys } from "src/api/classes";
 import { Button } from "src/components/ui/button";
 import { useQuery } from "src/hooks/useQuery";
-import { useDeleteClass } from "src/queries/classes/detail";
+import { useDeleteClass } from "src/queries/class/detail";
 
 type Props = {
   setOpen: (v: boolean) => void;

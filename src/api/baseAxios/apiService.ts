@@ -31,9 +31,9 @@ class ApiService {
     }
   }
 
-  async put<T, R = T>(endpoint: string, id: number, data: T): Promise<R> {
+  async put<T, R = T>(endpoint: string, id?: number, data?: T): Promise<R> {
     try {
-      return await baseAxios.put(`${endpoint}/${id}`, data);
+      return await baseAxios.put(id ? `${endpoint}/${id}` : endpoint, data);
     } catch (error) {
       return this.handleError<R>(error);
     }
@@ -51,9 +51,13 @@ class ApiService {
     }
   }
 
-  async delete<R = any>(endpoint: string, id: string | number): Promise<R> {
+  async delete<R = any>(
+    endpoint: string,
+    id: string | number,
+    params?: Record<string, any>,
+  ): Promise<R> {
     try {
-      return await baseAxios.delete(`${endpoint}/${id}`);
+      return await baseAxios.delete(`${endpoint}/${id}`, { params });
     } catch (error) {
       return this.handleError<R>(error);
     }

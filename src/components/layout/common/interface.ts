@@ -8,4 +8,5 @@ export type NavigateItem = {
   icon: React.ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
   >;
+  activeRoutes?: string[] | string;
 };
