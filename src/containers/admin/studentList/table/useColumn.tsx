@@ -165,14 +165,14 @@ const useColumn = () => {
                         });
                       })}
                       type="button"
-                      className="px-2 py-0.5"
+                      className="bg-transparent px-2 py-0.5 text-green-500 hover:bg-transparent"
                     >
                       <CheckIcon />
                     </Button>
                     <Button
                       disabled={isPending}
                       variant="delete"
-                      className="px-2 py-0.5"
+                      className="bg-transparent px-2 py-0.5 text-red-500 hover:bg-transparent"
                       onClick={() => {
                         setIsEditing(false);
                         form.reset();
@@ -201,7 +201,7 @@ const useColumn = () => {
           const row = props.row as Row<Response.Me>;
 
           return (
-            <div className="flex items-center justify-end gap-2">
+            <div className="flex items-center justify-end gap-5">
               <Modal
                 title="Delete Class"
                 content={({ setOpen }) => (
@@ -211,9 +211,7 @@ const useColumn = () => {
                   />
                 )}
                 trigger={
-                  <Button variant="delete">
-                    <TrashIcon className="h-4 w-4" />
-                  </Button>
+                  <TrashIcon className="h-4 w-4 cursor-pointer text-red-500" />
                 }
               />
               <Modal
@@ -229,9 +227,7 @@ const useColumn = () => {
                   />
                 )}
                 trigger={
-                  <Button variant="default">
-                    <Pencil className="h-4 w-4" />
-                  </Button>
+                  <Pencil className="h-4 w-4 cursor-pointer text-blue-500" />
                 }
               />
             </div>

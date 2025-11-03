@@ -5,9 +5,14 @@ import { ColumnDef, Row } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { TrashIcon } from "lucide-react";
 
-import { Button } from "src/components/ui/button";
 import { Checkbox } from "src/components/ui/checkbox";
 import Modal from "src/components/ui/modal";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "src/components/ui/tooltip";
 
 import RemoveStudentFromClassConfirm from "./removeStudentFromClassConfirm";
 
@@ -88,9 +93,16 @@ const useColumn = () => {
                   />
                 )}
                 trigger={
-                  <Button variant="delete">
-                    <TrashIcon className="h-4 w-4" />
-                  </Button>
+                  <TooltipProvider delayDuration={100}>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <TrashIcon className="h-4 w-4 cursor-pointer text-red-500" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-white text-black">
+                        <p>Remove student out of class</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 }
               />
             </div>

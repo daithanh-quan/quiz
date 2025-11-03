@@ -5,7 +5,6 @@ import { ColumnDef, Row } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { Pencil, TrashIcon } from "lucide-react";
 
-import { Button } from "src/components/ui/button";
 import { Checkbox } from "src/components/ui/checkbox";
 import Modal from "src/components/ui/modal";
 import DeleteConfirm from "src/containers/admin/examList/table/deleteConfirm";
@@ -67,7 +66,7 @@ const useColumn = () => {
           const row = props.row as Row<Response.Classes>;
 
           return (
-            <div className="flex items-center justify-end gap-2">
+            <div className="flex items-center justify-end gap-5">
               <Modal
                 title="Delete Class"
                 content={({ setOpen }) => (
@@ -77,9 +76,7 @@ const useColumn = () => {
                   />
                 )}
                 trigger={
-                  <Button variant="delete">
-                    <TrashIcon className="h-4 w-4" />
-                  </Button>
+                  <TrashIcon className="h-4 w-4 cursor-pointer text-red-500" />
                 }
               />
               <Modal
@@ -95,9 +92,7 @@ const useColumn = () => {
                   />
                 )}
                 trigger={
-                  <Button variant="default">
-                    <Pencil className="h-4 w-4" />
-                  </Button>
+                  <Pencil className="h-4 w-4 cursor-pointer text-blue-500" />
                 }
               />
             </div>
