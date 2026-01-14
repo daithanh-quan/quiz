@@ -11,14 +11,14 @@ declare namespace Payload {
   };
 
   export type CreateUser = {
-    username: string;
-    email: string;
-    role: "admin" | "superAdmin" | "client";
-    status: "active" | "pending";
+    username?: string;
+    email?: string;
+    role?: "admin" | "superAdmin" | "client";
+    status?: "active" | "pending";
   };
 
   export type CreateClasses = {
-    name: string;
+    name?: string;
     description?: string;
   };
 
@@ -31,9 +31,15 @@ declare namespace Payload {
   export type RemoveStudentFromClass = AddStudentToClass;
 
   export type CreateExam = {
-    name: string;
+    name?: string;
     description?: string;
   };
 
   export type EditExam = CreateExam;
+
+  export type AddQuestionsToExam = {
+    question_ids: number[];
+  };
+
+  export type RemoveQuestionsToExam = AddQuestionsToExam;
 }

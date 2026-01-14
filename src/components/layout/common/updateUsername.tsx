@@ -3,20 +3,18 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
 import { InputField } from "src/components/forms";
 import { Button } from "src/components/ui/button";
 import { useGetMe } from "src/queries/auth/me";
 import { useUpdateProfile } from "src/queries/user/detail";
 
-type FormValues = {
-  username: string;
-};
-
-const schema: ZodType<Partial<FormValues>> = z.object({
-  username: z.string({}).nonempty("Username is required"),
+const schema = z.object({
+  username: z.string().min(1, "Username is required"),
 });
+
+type FormValues = z.infer<typeof schema>;
 
 type Props = {
   onSuccess?: () => void;

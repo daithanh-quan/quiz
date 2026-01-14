@@ -48,6 +48,7 @@ declare namespace Response {
     name: string;
     description: string | null;
     creator: number;
+    questions: Question[];
     created_at: string;
     updated_at: string;
   };

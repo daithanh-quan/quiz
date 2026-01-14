@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
 import { ErrorResponse } from "src/api/baseAxios/interfaces";
 import { InputField } from "src/components/forms";
@@ -19,12 +19,7 @@ import { useSignIn } from "src/queries/auth/login";
 import { useGetMe } from "src/queries/auth/me";
 import { routerRole } from "src/utils";
 
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
-
-const schema: ZodType<Partial<LoginFormValues>> = z.object({
+const schema = z.object({
   email: z
     .string({
       message: "Username is required",
@@ -38,13 +33,15 @@ const schema: ZodType<Partial<LoginFormValues>> = z.object({
     .nonempty("Password is required"),
 });
 
+export type FormValues = z.infer<typeof schema>;
+
 const LoginContainer = () => {
   const router = useRouter();
   const { refetch } = useGetMe({
     enabled: false,
   });
 
-  const form = useForm<LoginFormValues>({
+  const form = useForm<FormValues>({
     defaultValues: {
       email: "",
       password: "",
@@ -74,7 +71,7 @@ const LoginContainer = () => {
     },
   });
 
-  const handleCredentialLogin: SubmitHandler<LoginFormValues> = async (v) => {
+  const handleCredentialLogin: SubmitHandler<FormValues> = async (v) => {
     const { email, password } = v;
     const payload = { email, password };
     mutate(payload);

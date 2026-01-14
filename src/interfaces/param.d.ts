@@ -19,9 +19,11 @@ declare namespace Param {
 
   export interface GetListExam extends Common {
     name?: string;
+    include_questions?: boolean;
   }
 
   export interface GetListQuestion extends Common {
     name?: string;
+    exam_id?: number;
   }
 }

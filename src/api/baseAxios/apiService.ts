@@ -55,9 +55,14 @@ class ApiService {
     endpoint: string,
     id: string | number,
     params?: Record<string, any>,
+    data?: Partial<Record<string, any>>,
+    fullEndpoint?: string,
   ): Promise<R> {
     try {
-      return await baseAxios.delete(`${endpoint}/${id}`, { params });
+      return await baseAxios.delete(
+        `${!fullEndpoint ? endpoint + "/" + id : fullEndpoint}`,
+        { params, data },
+      );
     } catch (error) {
       return this.handleError<R>(error);
     }

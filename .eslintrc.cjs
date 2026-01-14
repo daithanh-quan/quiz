@@ -1,30 +1,32 @@
-{
-  "extends": [
+const path = require("path");
+
+module.exports = {
+  extends: [
     "next",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
   ],
-  "plugins": ["@typescript-eslint", "prettier", "import"],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "tsconfigRootDir": "./",
-    "project": ["./tsconfig.json"],
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "modules": true,
-      "jsx": true
-    }
+  plugins: ["@typescript-eslint", "prettier", "import"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    tsconfigRootDir: path.resolve(__dirname),
+    project: ["./tsconfig.json"],
+    sourceType: "module",
+    ecmaFeatures: {
+      modules: true,
+      jsx: true,
+    },
   },
-  "rules": {
+  rules: {
     "prettier/prettier": "error",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
-        "vars": "all",
-        "args": "none"
-      }
+        vars: "all",
+        args: "none",
+      },
     ],
     "react-hooks/rules-of-hooks": "off",
     "@typescript-eslint/no-var-requires": "warn",
@@ -49,6 +51,6 @@
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "off"
-  }
-}
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+  },
+};

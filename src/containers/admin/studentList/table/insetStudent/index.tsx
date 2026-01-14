@@ -4,7 +4,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
 import { keys } from "src/api/users";
 import { InputField } from "src/components/forms";
@@ -13,25 +13,22 @@ import { useHistory } from "src/hooks/useHistory";
 import { useQuery } from "src/hooks/useQuery";
 import { useCreateUser, useUpdateProfile } from "src/queries/user/detail";
 
-export type FormValues = {
-  username: string;
-  email: string;
-  status: "pending" | "active";
-  role: "client";
-};
-
-const schema: ZodType<Partial<FormValues>> = z.object({
+const schema = z.object({
   username: z
     .string({
       required_error: "Username is required",
     })
     .nonempty("Username is required"),
+  status: z.string().optional(),
+  role: z.string().optional(),
   email: z
     .string({
       required_error: "Email is required",
     })
     .email("Email is invalid"),
 });
+
+export type FormValues = z.infer<typeof schema>;
 
 type Props = {
   setOpen: (open: boolean) => void;
