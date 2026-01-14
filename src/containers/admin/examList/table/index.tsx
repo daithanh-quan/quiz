@@ -23,6 +23,7 @@ const Table = () => {
     {
       page: 1,
       limit: 10,
+      include_questions: true,
       name: query?.search || "",
     },
     {

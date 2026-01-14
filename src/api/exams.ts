@@ -8,7 +8,7 @@ export const keys = {
 };
 
 export type ExamListResponse = {
-  data: Response.Classes[];
+  data: Response.Exam[];
   pagination: Response.Pagination;
 };
 
@@ -36,6 +36,6 @@ class Exams extends ApiService {
   };
 }
 
-const examApi = new Exams();
+const examsApi = new Exams();
 
-export default examApi;
+export default examsApi;

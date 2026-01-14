@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import examApi, { keys } from "src/api/exams";
+import examsApi, { keys } from "src/api/exams";
 import { ReactQueryOptions } from "src/interfaces/global";
 
 export const useGetListExam = <T>(
@@ -10,7 +10,7 @@ export const useGetListExam = <T>(
   return useQuery({
     queryKey: keys.getList(params),
     queryFn: async () => {
-      const data = await examApi.getList(params);
+      const data = await examsApi.getList(params);
 
       return data;
     },

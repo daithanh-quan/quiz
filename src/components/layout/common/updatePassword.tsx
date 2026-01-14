@@ -3,27 +3,24 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
 import InputPwField from "src/components/forms/passwordField";
 import { Button } from "src/components/ui/button";
 import { useGetMe } from "src/queries/auth/me";
 import { useUpdateProfile } from "src/queries/user/detail";
 
-type FormValues = {
-  newPassword: string;
-  confirmPassword: string;
-};
-
-const schemaPassword: ZodType<Partial<FormValues>> = z
+const schemaPassword = z
   .object({
-    newPassword: z.string({}).nonempty("New password is required"),
-    confirmPassword: z.string({}).nonempty("Confirm password is required"),
+    newPassword: z.string().nonempty("New password is required"),
+    confirmPassword: z.string().nonempty("Confirm password is required"),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+type FormValues = z.infer<typeof schemaPassword>;
 
 type Props = {
   onSuccess?: () => void;

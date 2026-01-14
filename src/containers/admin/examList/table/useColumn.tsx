@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
 
+import Link from "next/link";
+
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import dayjs from "dayjs";
@@ -39,11 +41,34 @@ const useColumn = () => {
       {
         accessorKey: "name",
         header: "Exam Name",
+        cell: (props) => {
+          const row = props.row as Row<Response.Exam>;
+
+          return (
+            <Link
+              className="text-blue-500"
+              href={`/admin/exams/${row.original.id}`}
+            >
+              {row.getValue("name")}
+            </Link>
+          );
+        },
       },
       {
         accessorKey: "description",
         header: "Description",
         cell: ({ row }) => row.getValue("description") || "-",
+      },
+      {
+        accessorKey: "questions",
+        header: "Total questions",
+        cell: (props) => {
+          const row = props.row as Row<Response.Exam>;
+
+          return (
+            <div className="pl-10">{row?.original?.questions?.length}</div>
+          );
+        },
       },
       {
         accessorKey: "created_at",

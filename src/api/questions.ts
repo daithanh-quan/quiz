@@ -2,10 +2,10 @@ import ApiService from "./baseAxios/apiService";
 
 export const keys = {
   getList: (params: Param.GetListQuestion) =>
-    ["/api/questions/admin/all", params] as const,
-  create: () => [`/api/questions/admin/`] as const,
-  update: () => [`/api/questions/admin`] as const,
-  delete: () => [`/api/questions/admin`] as const,
+    ["/questions/all", params] as const,
+  create: () => [`/questions/admin/`] as const,
+  update: () => [`/questions/admin`] as const,
+  delete: () => [`/questions/admin`] as const,
 };
 
 export type QuestionListResponse = {

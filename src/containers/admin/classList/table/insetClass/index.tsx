@@ -4,7 +4,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
 import { keys } from "src/api/classes";
 import { InputField } from "src/components/forms";
@@ -12,19 +12,16 @@ import { Button } from "src/components/ui/button";
 import { useQuery } from "src/hooks/useQuery";
 import { useCreateClass, useEditClass } from "src/queries/class/detail";
 
-export type FormValues = {
-  name: string;
-  description?: string;
-};
-
-const schema: ZodType<Partial<FormValues>> = z.object({
+const schema = z.object({
   name: z
     .string({
       required_error: "Name is required",
     })
-    .nonempty("Name is required"),
+    .min(1, "Name is required"),
   description: z.string().optional(),
 });
+
+export type FormValues = z.infer<typeof schema>;
 
 type Props = {
   setOpen: (open: boolean) => void;
